@@ -31,31 +31,38 @@ export const getCountries = async ({ commit }) => {
 }
 
 export const obtainCountry = async ({ commit }, name) => {
-  const { data } = await countriesApi.get(`/name/${name}`)
+  try {
+    const { data } = await countriesApi.get(`/name/${name}`)
 
-  const {
-    translations: {
-      spa: { common }
-    },
-    capital,
-    flags: { png },
-    population,
-    cca2,
-    ccn3
-  } = data
+    const {
+      translations: { ara, kor, por, ita, spa, jpn },
+      capital,
+      flags: { png },
+      population,
+      cca2,
+      ccn3
+    } = data[0]
 
-  const newPopulation = population.toLocaleString()
-  const firstCapital = capital && capital.length > 0 ? capital[0] : ''
+    const spanishName = spa?.common || ''
+    const firstCapital = capital && capital.length > 0 ? capital[0] : ''
+    const newPopulation = population?.toLocaleString() || ''
 
-  const country = {
-    name: common,
-    capital: firstCapital,
-    picture: png,
-    population: newPopulation,
-    cca2,
-    ccn3
+    const country = {
+      name: spanishName,
+      capital: firstCapital,
+      picture: png,
+      population: newPopulation,
+      cca2,
+      ccn3,
+      ara,
+      kor,
+      por,
+      ita,
+      jpn
+    }
+
+    commit('setCountry', country)
+  } catch (error) {
+    console.error(error)
   }
-  console.log(country)
-
-  commit('setCountry', country)
 }
