@@ -6,6 +6,7 @@ export const getCountries = async ({ commit }) => {
 
   const countries = data.map((country) => {
     const {
+      name,
       translations: {
         spa: { common }
       },
@@ -17,13 +18,19 @@ export const getCountries = async ({ commit }) => {
     const newPopulation = population.toLocaleString()
     const firstCapital = capital && capital.length > 0 ? capital[0] : ''
 
-    return { name: common, capital: firstCapital, picture: png, population: newPopulation }
+    return {
+      name: common,
+      capital: firstCapital,
+      picture: png,
+      population: newPopulation,
+      searchName: name.common
+    }
   })
 
   commit('setCountries', countries)
 }
 
-export const getCountry = async ({ commit }, name) => {
+export const obtainCountry = async ({ commit }, name) => {
   const { data } = await countriesApi.get(`/name/${name}`)
 
   const {
@@ -34,8 +41,7 @@ export const getCountry = async ({ commit }, name) => {
     flags: { png },
     population,
     cca2,
-    ccn3,
-    translations
+    ccn3
   } = data
 
   const newPopulation = population.toLocaleString()
@@ -47,7 +53,9 @@ export const getCountry = async ({ commit }, name) => {
     picture: png,
     population: newPopulation,
     cca2,
-    ccn3,
-    translations
+    ccn3
   }
+  console.log(country)
+
+  commit('setCountry', country)
 }

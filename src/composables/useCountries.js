@@ -9,7 +9,7 @@ const useCountries = () => {
   }
 
   const getCountry = async (country) => {
-    await store.dispatch('countries/getCountry', country)
+    await store.dispatch('countries/obtainCountry', country)
   }
 
   return {

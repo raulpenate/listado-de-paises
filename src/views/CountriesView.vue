@@ -16,14 +16,14 @@
       <template #item-name="{ name, capital }">
         {{ name }}, {{ capital }}
       </template>
-      <template #item-show="{ name }">
-        <a-button type="primary" @click="showModal(name)">Ver...</a-button>
+      <template #item-show="{ searchName }">
+        <a-button type="primary" @click="showModal(searchName)">Ver...</a-button>
         <a-modal
         title="Title"
-        :open.sync="getModalVisibility(name)"
-        @ok="handleOk(name)"
+        :open.sync="getModalVisibility(searchName)"
+        @ok="handleOk(searchName)"
       >
-        <p>{{ name }}</p>
+        <p>{{ country }}</p>
       </a-modal>
       </template>
     </EasyDataTable>
@@ -34,7 +34,7 @@
 import useCountries from '../composables/useCountries'
 import { ref, reactive } from 'vue'
 
-const { getCountries, countries, country } = useCountries()
+const { getCountries, getCountry ,countries, country } = useCountries()
 
 getCountries()
 
@@ -54,17 +54,17 @@ const headers = ref([
 
 const modals = reactive({});
 
-const showModal = (name) => {
-  modals[name] = true;
-  console.log(name)
+const showModal = (searchName) => {
+  modals[searchName] = true;
+  getCountry(searchName)
 };
 
-const getModalVisibility = (name) => {
-  return modals[name] || false;
+const getModalVisibility = (searchName) => {
+  return modals[searchName] || false;
 };
 
-const handleOk = (name) => {
-  modals[name] = false;
+const handleOk = (searchName) => {
+  modals[searchName] = false;
 };
 </script>
 
