@@ -10,9 +10,6 @@ export const getCountry = (state) => {
   return state.country
 }
 
-// export const getModal =
-//   (state) =>
-//   (searchName = '') => {
-//     console.log('hola')
-//     return state.modals[searchName] || false
-//   }
+export const getModal = (state) => (searchName) => {
+  return state.modals[searchName] || false
+}

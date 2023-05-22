@@ -24,8 +24,8 @@ const useCountries = () => {
     store.commit('countries/setCountry', '')
   }
 
-  const getModal = (country) => {
-    store.commit('countries/getModal', country)
+  const displayModal = (country) => {
+    return store.getters['countries/getModal'](country)
   }
 
   return {
@@ -34,7 +34,7 @@ const useCountries = () => {
     cleanCountry,
     openModal,
     closeModal,
-    getModal,
+    displayModal,
 
     countries: computed(() => store.getters['countries/getCountries']),
     country: computed(() => store.getters['countries/getCountry'])

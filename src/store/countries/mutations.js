@@ -19,5 +19,5 @@ export const closeModal = (state, country) => {
 }
 
 export const getModal = (state, country) => {
-  return state.modals[country] || false
+  return state.modals[country]
 }
